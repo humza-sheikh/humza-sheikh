@@ -87,7 +87,7 @@ Here’s what’s in the pipeline:
 > For appointment-heavy businesses like dentists, HVAC, salons, and restaurants. AI voice agents that handle inbound calls, book appointments, and actually pick up the phone.
 
 **VoiceAround.io** - Real-Time Voice Transformation
-> Takes a caller’s voice and maps it to a templated voice profile in real-time. Built specifically for overseas cold calling agencies.
+> Takes the users voice and maps it to a templated voice profile in real-time. Built specifically for content creators.
 
 ---
 
