@@ -6,7 +6,7 @@ The humza-sheikh Worker is deployed to Humza@automization.io's Account at https:
 
 The apex and www custom domains are attached to the Worker. Cloudflare DNS contains the Spacemail MX, SPF, DKIM and autodiscovery records, the existing class subdomain, and Resend verification records. The registrar remains Spaceship.
 
-Nameserver activation is pending. The old DNSSEC DS record has a 24-hour TTL: remove it at Spaceship, allow its cache lifetime to expire, then change nameservers to magali.ns.cloudflare.com and tim.ns.cloudflare.com. Restore DNSSEC using Cloudflare's new DS record after activation. Do not switch while an old DS record may still be cached.
+Nameserver activation is pending. DNSSEC was disabled at Spaceship with owner approval and the old DS record was absent from the registry at 19:06 Dubai on 24 September 2026. Allow its previous 24-hour TTL to expire: change nameservers no earlier than 19:10 Dubai on 25 September 2026, to magali.ns.cloudflare.com and tim.ns.cloudflare.com. Restore DNSSEC using Cloudflare's new DS record after activation. Do not switch while an old DS record may still be cached.
 
 ## Owner access
 
@@ -16,10 +16,12 @@ The server validates Access JWT signatures, issuer, audience, expiry and owner e
 
 ## Email and data
 
-The existing Spacemail mailbox receives humza@humzasheikh.com mail. Resend handles website alerts; keep its bounce MX on the send subdomain, never at the root. RESEND_API_KEY is stored as a Worker secret. NOTIFICATION_FROM and OWNER_EMAIL are in wrangler.jsonc. Complete domain verification in Resend before expecting alerts to deliver.
+The existing Spacemail mailbox receives humza@humzasheikh.com mail. Resend handles website alerts; keep its bounce MX on the send subdomain, never at the root. RESEND_API_KEY is stored as a Worker secret. NOTIFICATION_FROM and OWNER_EMAIL are in wrangler.jsonc. Resend verified the domain and all four required DNS records on 24 September 2026. Actual notification delivery has not yet been tested.
 
 Briefs save to D1 before alert delivery. Pending or failed alerts can be retried in /manage. Both schema migrations are applied to production, but historical Sites records were not imported.
 
 ## Future releases
 
 Run the validation and build commands in README.md, then pnpm deploy. Authenticate Wrangler to the configured account first. Rotate the secret with pnpm exec wrangler secret put RESEND_API_KEY. GitHub automatic deployment is not configured.
+
+
