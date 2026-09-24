@@ -48,3 +48,4 @@ next-env.d.ts
 # Keep the template, never credentials or compiler caches.
 !.env.example
 *.tsbuildinfo
+.dev.vars*

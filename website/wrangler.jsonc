@@ -1,0 +1,27 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "humza-sheikh",
+  "account_id": "4bb67e7c821bfd5f559492a94048e823",
+  "main": "vinext/server/fetch-handler",
+  "compatibility_date": "2026-09-24",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "preview_urls": false,
+  "routes": [
+    { "pattern": "humzasheikh.com", "custom_domain": true },
+    { "pattern": "www.humzasheikh.com", "custom_domain": true }
+  ],
+  "observability": { "enabled": true },
+  "d1_databases": [{
+    "binding": "DB",
+    "database_name": "humza-sheikh",
+    "database_id": "b8b5e032-24a3-4da7-86fa-19e8e8e977ba",
+    "migrations_dir": "drizzle"
+  }],
+  "vars": {
+    "OWNER_EMAIL": "humza@humzasheikh.com",
+    "NOTIFICATION_FROM": "Humza Sheikh <humza@humzasheikh.com>",
+    "ACCESS_AUD": "",
+    "ACCESS_TEAM_DOMAIN": "humza-sheikh-admin.cloudflareaccess.com"
+  }
+}

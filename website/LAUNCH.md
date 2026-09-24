@@ -1,19 +1,25 @@
-# Launch configuration
+# Cloudflare deployment
 
-## Domain and access
+The humza-sheikh Worker is deployed to Humza@automization.io's Account at https://humza-sheikh.humza.workers.dev. The humzasheikh.com zone uses the Free plan. No paid upgrade was requested or enabled.
 
-The site is currently hosted at https://humza-connections.humzasheikh.chatgpt.site with its existing private audience. The custom domain humzasheikh.com was attached and awaiting DNS verification at the time of this export. Retrieve current DNS instructions from Site settings and preserve email DNS records. Once the custom domain is active, update `metadataBase` in `app/layout.tsx` and publish through Sites.
+## Domain migration status (24 September 2026)
 
-## Submission alerts
+The apex and www custom domains are attached to the Worker. Cloudflare DNS contains the Spacemail MX, SPF, DKIM and autodiscovery records, the existing class subdomain, and Resend verification records. The registrar remains Spaceship.
 
-Set `RESEND_API_KEY` as a secret, `NOTIFICATION_FROM` to a verified sender, and `OWNER_EMAIL` to the owner’s authenticated account email in Site runtime settings. Republish after configuration. Never commit actual credentials.
+Nameserver activation is pending. The old DNSSEC DS record has a 24-hour TTL: remove it at Spaceship, allow its cache lifetime to expire, then change nameservers to magali.ns.cloudflare.com and tim.ns.cloudflare.com. Restore DNSSEC using Cloudflare's new DS record after activation. Do not switch while an old DS record may still be cached.
 
-Alerts are addressed to humza@humzasheikh.com. Briefs save before notification delivery. Pending and failed alerts can be retried in `/manage`. Email delivery requires the provider configuration; the site does not claim that an acknowledgement email has been sent to visitors.
+## Owner access
 
-## Brief management
+Protect /manage and /api/manage (including child paths) on both apex and www with Cloudflare Access, using email one-time PIN and an allow policy for humza@humzasheikh.com only. Set ACCESS_AUD in wrangler.jsonc to that application's audience and redeploy. ACCESS_TEAM_DOMAIN is humza-sheikh-admin.cloudflareaccess.com.
 
-The owner dashboard at `/manage` supports stages new, qualified, introduced, accepted, paid and closed. UTM source and campaign values support attribution. Interaction events use a temporary in-memory visit ID and respect Do Not Track / Global Privacy Control. No live database records are included in this repository.
+The server validates Access JWT signatures, issuer, audience, expiry and owner email. Until the audience is configured, all admin requests are denied. Arbitrary identity headers do not grant access. The workers.dev URL cannot bypass this validation.
 
-## Deployment relationship
+## Email and data
 
-GitHub is the source handoff. No GitHub Actions deployment or automatic Sites sync has been configured. Use Sites to publish changes to the current deployment; changing hosting requires a separate migration.
+The existing Spacemail mailbox receives humza@humzasheikh.com mail. Resend handles website alerts; keep its bounce MX on the send subdomain, never at the root. RESEND_API_KEY is stored as a Worker secret. NOTIFICATION_FROM and OWNER_EMAIL are in wrangler.jsonc. Complete domain verification in Resend before expecting alerts to deliver.
+
+Briefs save to D1 before alert delivery. Pending or failed alerts can be retried in /manage. Both schema migrations are applied to production, but historical Sites records were not imported.
+
+## Future releases
+
+Run the validation and build commands in README.md, then pnpm deploy. Authenticate Wrangler to the configured account first. Rotate the secret with pnpm exec wrangler secret put RESEND_API_KEY. GitHub automatic deployment is not configured.

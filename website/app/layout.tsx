@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://humza-connections.humzasheikh.chatgpt.site"),
+  metadataBase: new URL("https://humzasheikh.com"),
   title: "Humza Sheikh — Business Introductions",
   description: "Business introductions for US companies and businesses worldwide. Find relevant providers, suppliers and partners, with the introduction fee agreed beforehand.",
   alternates: { canonical: "/" },
